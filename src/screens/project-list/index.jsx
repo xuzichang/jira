@@ -1,13 +1,13 @@
 import { List } from "./list"
 import { SearchPanel } from "./search-pannel"
-import React from 'react';
+import React, { useMemo } from 'react';
 import {useEffect,useState} from 'react'
-import { cleanObject } from "utils";
+import { cleanObject, useDebounce, useMount } from "utils";
 import qs from 'qs'
 /*
  * @Description: 
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-09-23 14:35:04
+ * @LastEditTime: 2022-09-23 15:04:48
  */
 const apiUrl=process.env.REACT_APP_API_URL
 export const ProjectListScreen=()=>{
@@ -16,23 +16,26 @@ export const ProjectListScreen=()=>{
         name:"",
         personId:""
     })
+    const debouncedParam = useDebounce(param,2000)
     const [list,setList] = useState([])
 
     useEffect(()=>{
-        fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(async response=>{
+        fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`).then(async response=>{
             if(response.ok){
                 setList(await response.json())
             }
         })
-    },[param])
-    // 初始化users
-    useEffect(()=>{
+    },[debouncedParam])
+
+    // 初始化users，组件加载时，运行一次【还是运行了两次】
+    
+    useMount(()=>{
         fetch(`${apiUrl}/users`).then(async response=>{
             if(response.ok){
                 setUsers(await response.json())
             }
         })
-    },[])
+    })
     
     return <div>
         <SearchPanel users={users} param={param} setParam={setParam}/>
