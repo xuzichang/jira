@@ -2,7 +2,7 @@ import React from 'react';
 /*
  * @Description: 
  * @Date: 2022-04-16 11:56:41
- * @LastEditTime: 2022-04-16 12:43:26
+ * @LastEditTime: 2022-09-23 14:18:50
  */
 export const SearchPanel=({users,param,setParam})=>{
     return <form>
@@ -16,7 +16,7 @@ export const SearchPanel=({users,param,setParam})=>{
         })}>
             <option value={""}>负责人</option>
             {
-                users.map(user=><option value={user.id}>{user.name}</option>)
+                users.map(user=><option key={user.id} value={user.id}>{user.name}</option>)
             }
         </select>
     </form>
