@@ -1,13 +1,13 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-10-03 13:34:53
+ * @LastEditTime: 2022-10-03 14:08:27
  */
 
 import { useEffect, useState } from "react";
 
 // 判断值是不是0，不是则取反变成布尔值
-export const isFalsy = (value: any) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
 // 不修改传入对象本身
 export const cleanObject = (object: object) => {
@@ -29,7 +29,7 @@ export const useMount = (callback: () => void) => {
 };
 
 // 将value转换为debouncedValue
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = (value: unknown, delay?: number): any => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // 每次value变化时设置一个定时器
