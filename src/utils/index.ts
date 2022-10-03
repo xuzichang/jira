@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-10-03 14:08:27
+ * @LastEditTime: 2022-10-03 14:19:43
  */
 
 import { useEffect, useState } from "react";
@@ -29,7 +29,8 @@ export const useMount = (callback: () => void) => {
 };
 
 // 将value转换为debouncedValue
-export const useDebounce = (value: unknown, delay?: number): any => {
+// 箭头函数中使用泛型，传入参数是什么类型返回就是什么类型
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // 每次value变化时设置一个定时器
