@@ -2,7 +2,7 @@ import React from "react";
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:41
- * @LastEditTime: 2022-10-03 13:27:11
+ * @LastEditTime: 2022-11-16 10:16:35
  */
 export interface User {
   id: string;
@@ -10,6 +10,7 @@ export interface User {
   email: string;
   title: string;
   organization: string;
+  token: string;
 }
 interface SearchPanelProps {
   users: User[];

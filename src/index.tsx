@@ -1,22 +1,23 @@
 /*
  * @Description:
  * @Date: 2022-04-15 15:54:23
- * @LastEditTime: 2022-09-23 13:33:03
+ * @LastEditTime: 2022-11-16 09:49:30
  */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
+import { loadDevTools } from "jira-dev-tool";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+loadDevTools(() =>
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  )
 );
 
 // If you want to start measuring performance in your app, pass a function
