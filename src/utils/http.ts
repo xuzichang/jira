@@ -1,9 +1,10 @@
 import qs from "qs";
 import * as auth from "auth-provider";
+import { useAuth } from "context/auth-context";
 /*
  * @Description:
  * @Date: 2022-11-16 11:21:38
- * @LastEditTime: 2022-11-16 11:42:45
+ * @LastEditTime: 2022-11-16 11:56:24
  */
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -14,7 +15,7 @@ interface Config extends RequestInit {
 // ${apiUrl}/projects  这里的projects就是endpoint
 export const http = async (
   endpoint: string,
-  { data, token, headers, ...customConfig }: Config
+  { data, token, headers, ...customConfig }: Config = {} // ={}添加默认值为{}，参数变为可选
 ) => {
   const config = {
     method: "GET", // 默认为get，下面的customConfig会覆盖这个
@@ -48,4 +49,11 @@ export const http = async (
         return Promise.reject(data);
       }
     });
+};
+
+// 上面的还需要手动传入token，使用useHttp可以自动从useAuth中获取用户
+export const useHttp = () => {
+  const { user } = useAuth();
+  return (...[endpoint, config]: Parameters<typeof http>) =>
+    http(endpoint, { ...config, token: user?.token });
 };

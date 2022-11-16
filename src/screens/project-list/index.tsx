@@ -4,10 +4,11 @@ import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "utils";
 import qs from "qs";
+import { useHttp } from "utils/http";
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-10-03 13:38:13
+ * @LastEditTime: 2022-11-16 11:56:27
  */
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -18,25 +19,16 @@ export const ProjectListScreen = () => {
   });
   const debouncedParam = useDebounce(param, 200);
   const [list, setList] = useState([]);
+  const client = useHttp();
 
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    client("projects", { data: cleanObject(debouncedParam) }).then(setList);
   }, [debouncedParam]);
 
   // 初始化users，组件加载时，运行一次【还是运行了两次】
 
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
-      if (response.ok) {
-        setUsers(await response.json());
-      }
-    });
+    client("users").then(setUsers);
   });
 
   return (
