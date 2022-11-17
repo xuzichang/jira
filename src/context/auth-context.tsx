@@ -1,3 +1,8 @@
+/*
+ * @Description:
+ * @Date: 2022-11-16 10:34:37
+ * @LastEditTime: 2022-11-17 12:11:47
+ */
 import React, { useState, ReactNode } from "react";
 import * as auth from "auth-provider";
 import { User } from "screens/project-list/search-pannel";
@@ -32,6 +37,7 @@ AuthContext.displayName = "AuthContext";
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // 刷新用户会变null，回到登录状态=>新写bootstrapUser方法+useMount
   const [user, setUser] = useState<User | null>(null);
+  // 调用auth-provider中的方法
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
@@ -39,6 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useMount(() => {
     bootstrapUser().then(setUser);
   });
+
   return (
     <AuthContext.Provider
       children={children}
@@ -47,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// 自定义hook
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {

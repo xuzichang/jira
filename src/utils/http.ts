@@ -1,11 +1,7 @@
 import qs from "qs";
 import * as auth from "auth-provider";
 import { useAuth } from "context/auth-context";
-/*
- * @Description:
- * @Date: 2022-11-16 11:21:38
- * @LastEditTime: 2022-11-16 11:56:24
- */
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface Config extends RequestInit {
@@ -51,6 +47,7 @@ export const http = async (
     });
 };
 
+// 函数中要使用hook，函数本身需要是hook
 // 上面的还需要手动传入token，使用useHttp可以自动从useAuth中获取用户
 export const useHttp = () => {
   const { user } = useAuth();

@@ -8,7 +8,7 @@ import { useHttp } from "utils/http";
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-11-16 11:56:27
+ * @LastEditTime: 2022-11-17 12:37:40
  */
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -19,6 +19,7 @@ export const ProjectListScreen = () => {
   });
   const debouncedParam = useDebounce(param, 200);
   const [list, setList] = useState([]);
+
   const client = useHttp();
 
   useEffect(() => {

@@ -1,17 +1,21 @@
 /*
  * @Description:
  * @Date: 2022-11-16 10:09:27
- * @LastEditTime: 2022-11-16 10:43:35
+ * @LastEditTime: 2022-11-17 12:03:07
  */
 import { User } from "screens/project-list/search-pannel";
 
 const apiUrl = process.env.REACT_APP_API_URL;
+
+// 获取token
 const localStorageKey = "__auth_provider_token";
 export const getToken = () => window.localStorage.getItem(localStorageKey);
+
 export const handleUserResponse = ({ user }: { user: User }) => {
   window.localStorage.setItem(localStorageKey, user.token || "");
   return user;
 };
+
 // 登录
 export const login = (data: { username: string; password: string }) => {
   return fetch(`${apiUrl}/login`, {
