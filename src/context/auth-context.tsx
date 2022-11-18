@@ -1,13 +1,15 @@
 /*
  * @Description:
  * @Date: 2022-11-16 10:34:37
- * @LastEditTime: 2022-11-17 12:11:47
+ * @LastEditTime: 2022-11-18 18:10:44
  */
 import React, { useState, ReactNode } from "react";
 import * as auth from "auth-provider";
 import { User } from "screens/project-list/search-pannel";
 import { http } from "utils/http";
 import { useMount } from "utils";
+import { useAsync } from "utils/use-async";
+import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 
 interface AuthForm {
   username: string;
@@ -35,17 +37,35 @@ const AuthContext = React.createContext<
 AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // 刷新用户会变null，回到登录状态=>新写bootstrapUser方法+useMount
-  const [user, setUser] = useState<User | null>(null);
+  // 1. 刷新用户会变null，回到登录状态=>新写bootstrapUser方法+useMount
+  // 2. 在列表页刷新会显示登录页面再回到列表=>useAsync获取isIdle || isLoading，在me接口还没有返回时显示loading
+  // 3. 在列表页请求失败时会回到登录页面=>useAsync获取 isError，显示全页面的error信息
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
+
   // 调用auth-provider中的方法
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser());
   });
 
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (isError) {
+    return <FullPageErrorFallback error={error} />;
+  }
   return (
     <AuthContext.Provider
       children={children}
