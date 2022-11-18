@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:12:13
- * @LastEditTime: 2022-11-18 14:51:30
+ * @LastEditTime: 2022-11-18 17:17:09
  */
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
@@ -14,7 +14,14 @@ import { Button, Dropdown, Menu } from "antd";
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
   const items = [
-    { label: <Button type={"link"}>登出</Button>, key: "logout" }, // 菜单项务必填写 key
+    {
+      label: (
+        <Button type={"link"} onClick={logout}>
+          登出
+        </Button>
+      ),
+      key: "logout",
+    }, // 菜单项务必填写 key
   ];
 
   return (

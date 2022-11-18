@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 10:09:27
- * @LastEditTime: 2022-11-17 12:03:07
+ * @LastEditTime: 2022-11-18 17:26:17
  */
 import { User } from "screens/project-list/search-pannel";
 
@@ -28,7 +28,7 @@ export const login = (data: { username: string; password: string }) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   });
 };
@@ -45,7 +45,7 @@ export const register = (data: { username: string; password: string }) => {
     if (response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   });
 };
