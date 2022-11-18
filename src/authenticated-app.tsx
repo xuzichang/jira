@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:12:13
- * @LastEditTime: 2022-11-18 14:31:05
+ * @LastEditTime: 2022-11-18 14:51:30
  */
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
@@ -10,9 +10,13 @@ import { useAuth } from "context/auth-context";
 import React from "react";
 import { ProjectListScreen } from "screens/project-list";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
-import { Dropdown, Menu } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+  const items = [
+    { label: <Button type={"link"}>登出</Button>, key: "logout" }, // 菜单项务必填写 key
+  ];
+
   return (
     <Container>
       <Header between={true}>
@@ -22,16 +26,10 @@ export const AuthenticatedApp = () => {
           <h2>用户</h2>
         </HeaderLeft>
         <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu key={"logout"}>
-                <Menu.Item>
-                  <a onClick={logout}>登出</a>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <a onClick={(e) => e.preventDefault()}>Hi，{user?.name}</a>
+          <Dropdown menu={{ items }}>
+            <Button type={"link"} onClick={(e) => e.preventDefault()}>
+              Hi，{user?.name}
+            </Button>
           </Dropdown>
         </HeaderRight>
       </Header>

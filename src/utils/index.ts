@@ -1,21 +1,25 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-10-03 14:19:43
+ * @LastEditTime: 2022-11-18 14:41:52
  */
 
 import { useEffect, useState } from "react";
 
 // 判断值是不是0，不是则取反变成布尔值
+// 可能造成的bug：{checked:false}
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
+
 // 不修改传入对象本身
-export const cleanObject = (object: object) => {
+export const cleanObject = (object: { [key: string]: unknown }) => {
   const result: any = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
     // 排除value为0的情况
-    if (isFalsy(value)) {
+    if (isVoid(value)) {
       delete result[key];
     }
   });

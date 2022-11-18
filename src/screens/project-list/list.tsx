@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2022-11-18 14:20:06
+ * @LastEditTime: 2022-11-18 15:07:58
  */
 import { Table } from "antd";
 import dayjs from "dayjs";
@@ -24,6 +24,7 @@ export const List = ({ list, users }: ListProps) => {
   return (
     <Table
       pagination={false}
+      rowKey={(row) => row.id}
       columns={[
         {
           title: "名称",

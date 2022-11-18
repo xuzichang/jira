@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:05:00
- * @LastEditTime: 2022-11-18 00:13:30
+ * @LastEditTime: 2022-11-18 14:44:58
  */
 import { Button, Card, Divider } from "antd";
 import React, { useState } from "react";
@@ -22,9 +22,9 @@ export const UnauthenticatedAPP = () => {
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
         {isRegister ? <RegisterScreen /> : <LoginScreen />}
         <Divider />
-        <a onClick={() => setIsRegister(!isRegister)}>
+        <Button type={"link"} onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "已经有账号了？直接登录" : "没有账号？注册新账号"}
-        </a>
+        </Button>
       </ShadowCard>
     </Container>
   );

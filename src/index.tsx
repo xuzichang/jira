@@ -1,22 +1,23 @@
 /*
  * @Description:
  * @Date: 2022-04-15 15:54:23
- * @LastEditTime: 2022-11-18 00:15:02
+ * @LastEditTime: 2022-11-18 14:54:38
  */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { loadDevTools } from "jira-dev-tool";
+import { loadServer, DevTools } from "jira-dev-tool";
 import { AppProviders } from "context";
 import "antd/dist/antd.less";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-loadDevTools(() =>
+loadServer(() =>
   root.render(
     <React.StrictMode>
       <AppProviders>
+        <DevTools />
         <App />
       </AppProviders>
     </React.StrictMode>
