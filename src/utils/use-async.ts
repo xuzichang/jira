@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-18 16:27:03
- * @LastEditTime: 2022-11-18 17:47:44
+ * @LastEditTime: 2022-11-18 19:02:05
  */
 import { useState } from "react";
 
@@ -25,7 +25,7 @@ export const useAsync = <D>(
   initialState?: State<D>,
   initialConfig?: typeof defaultConfig
 ) => {
-  const config = { ...defaultConfig, initialConfig };
+  const config = { ...defaultConfig, ...initialConfig };
 
   const [state, setState] = useState<State<D>>({
     ...defaultInitialState,
