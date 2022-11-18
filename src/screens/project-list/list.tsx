@@ -1,9 +1,9 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2022-11-18 15:07:58
+ * @LastEditTime: 2022-11-18 16:18:08
  */
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { User } from "./search-pannel";
@@ -15,12 +15,11 @@ interface Project {
   organization: string;
   created: number;
 }
-interface ListProps {
-  list: Project[];
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
 
-export const List = ({ list, users }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
       pagination={false}
@@ -59,7 +58,7 @@ export const List = ({ list, users }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props} // datasource在上级index.tsx中传递了。ListProps extends TableProps<Project>
     ></Table>
   );
 };
