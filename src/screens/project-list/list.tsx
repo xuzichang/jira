@@ -1,13 +1,13 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2022-11-18 16:18:08
+ * @LastEditTime: 2022-11-18 16:43:03
  */
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { User } from "./search-pannel";
-interface Project {
+export interface Project {
   id: string;
   name: string;
   personId: string;
