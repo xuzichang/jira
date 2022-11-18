@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "utils";
 import qs from "qs";
 import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-11-17 12:37:40
+ * @LastEditTime: 2022-11-18 14:15:53
  */
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -33,9 +34,14 @@ export const ProjectListScreen = () => {
   });
 
   return (
-    <div>
+    <Contarin>
+      <h1>项目列表</h1>
       <SearchPanel users={users} param={param} setParam={setParam} />
       <List users={users} list={list} />
-    </div>
+    </Contarin>
   );
 };
+
+const Contarin = styled.div`
+  padding: 3.2rem;
+`;

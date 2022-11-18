@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.0.0",
     "antd": "^4.24.3",
     "craco-less": "^2.0.0",
+    "dayjs": "^1.11.6",
     "eslint-config-prettier": "^8.5.0",
     "jira-dev-tool": "^1.7.61",
     "json-server": "^0.17.0",
