@@ -2,7 +2,7 @@ import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
 import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "utils";
+import { cleanObject, useDebounce, useDocumentTitle, useMount } from "utils";
 import qs from "qs";
 import { useHttp } from "utils/http";
 import styled from "@emotion/styled";
@@ -25,6 +25,9 @@ export const ProjectListScreen = () => {
 
   const { isLoading, error, data: list } = UseProject(debouncedParam);
   const { data: users } = useUsers();
+
+  // 使用自定义的hook实现动态标题
+  useDocumentTitle("项目列表", false);
 
   return (
     <Contarin>

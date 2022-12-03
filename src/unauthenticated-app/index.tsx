@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:05:00
- * @LastEditTime: 2022-11-18 17:19:34
+ * @LastEditTime: 2022-12-03 17:24:02
  */
 import { Button, Card, Divider, Typography } from "antd";
 import React, { useState } from "react";
@@ -11,10 +11,14 @@ import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
+import { useDocumentTitle } from "utils";
 
 export const UnauthenticatedAPP = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  // 使用自定义的hook实现动态标题
+  useDocumentTitle("请登录注册以继续");
 
   return (
     <Container>

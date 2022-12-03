@@ -1,10 +1,10 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-11-18 14:41:52
+ * @LastEditTime: 2022-12-03 17:22:18
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // 判断值是不是0，不是则取反变成布尔值
 // 可能造成的bug：{checked:false}
@@ -71,3 +71,27 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 // log()#2  // 发现 timeout#1！ 取消，设置timeout#2
 // log()#3  // 发现 timeout#2！ 取消，设置timeout#3
 //          // 所以，log()#3 结束后，只剩timeout#3在独自等待
+
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  // 页面加载时：oldTitle===旧title 'ReactAPP'
+  // 加载后：oldTtile ===新传入的title
+  const oldTtile = useRef(document.title).current;
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  // keepOnUnmount 页面卸载时title仍旧保留。如果一个页面忘记使用useDocumentTile时，标题不会更改
+  useEffect(() => {
+    // 页面卸载时调用return后的函数
+    return () => {
+      if (!keepOnUnmount) {
+        // 不指定依赖，读到的是旧title
+        document.title = oldTtile;
+      }
+    };
+  }, [keepOnUnmount, oldTtile]);
+};
