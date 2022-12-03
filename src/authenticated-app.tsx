@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:12:13
- * @LastEditTime: 2022-12-03 17:53:10
+ * @LastEditTime: 2022-12-03 18:22:48
  */
 import styled from "@emotion/styled";
 import { Row } from "components/lib";
@@ -14,6 +14,7 @@ import { Button, Dropdown, Menu } from "antd";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
+import { resetRoute } from "utils";
 
 export const AuthenticatedApp = () => {
   return (
@@ -26,6 +27,10 @@ export const AuthenticatedApp = () => {
             <Route
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
+            />
+            <Route
+              path="*"
+              element={<Navigate to={"/projects"} replace={true} />}
             />
           </Routes>
         </Router>
@@ -50,7 +55,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <SoftwareLogo width={"18rem"} color={"rgb(38,132,255)"} />
+        <Button type={"link"} onClick={resetRoute}>
+          <SoftwareLogo width={"18rem"} color={"rgb(38,132,255)"} />
+        </Button>
         <h2>项目</h2>
         <h2>用户</h2>
       </HeaderLeft>

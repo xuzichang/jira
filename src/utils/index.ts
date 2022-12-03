@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-12-03 17:22:18
+ * @LastEditTime: 2022-12-03 18:20:46
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -95,3 +95,6 @@ export const useDocumentTitle = (
     };
   }, [keepOnUnmount, oldTtile]);
 };
+
+// 重置路由
+export const resetRoute = () => (window.location.href = window.location.origin);
