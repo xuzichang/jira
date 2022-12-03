@@ -1,8 +1,9 @@
 /*
  * @Description:
  * @Date: 2022-04-15 15:54:23
- * @LastEditTime: 2022-11-18 14:54:38
+ * @LastEditTime: 2022-12-03 19:15:52
  */
+import "./wdyr";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";

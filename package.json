@@ -14,6 +14,7 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react-dom": "^18.0.0",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "antd": "^4.24.3",
     "craco-less": "^2.0.0",
     "dayjs": "^1.11.6",

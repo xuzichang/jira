@@ -1,3 +1,8 @@
+/*
+ * @Description:
+ * @Date: 2022-04-16 11:54:36
+ * @LastEditTime: 2022-12-03 20:19:46
+ */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
 import React, { useMemo } from "react";
@@ -10,19 +15,14 @@ import { Typography } from "antd";
 import { useAsync } from "utils/use-async";
 import { UseProject } from "utils/project";
 import { useUsers } from "utils/user";
-/*
- * @Description:
- * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-11-18 16:50:04
- */
+import { useUrlQueryParam } from "utils/url";
+
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  const debouncedParam = useDebounce(param, 200);
+  // const [keys] =useState<('name'|'personId')[]>(['name','personId'])
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
 
+  const debouncedParam = useDebounce(param, 200);
   const { isLoading, error, data: list } = UseProject(debouncedParam);
   const { data: users } = useUsers();
 
@@ -40,6 +40,8 @@ export const ProjectListScreen = () => {
     </Contarin>
   );
 };
+
+ProjectListScreen.whyDidYouRender = false;
 
 const Contarin = styled.div`
   padding: 3.2rem;

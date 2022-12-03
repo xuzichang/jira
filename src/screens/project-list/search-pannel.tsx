@@ -3,7 +3,7 @@ import React from "react";
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:41
- * @LastEditTime: 2022-11-18 14:13:15
+ * @LastEditTime: 2022-12-03 20:22:06
  */
 export interface User {
   id: string;
@@ -49,7 +49,7 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
         >
           <Select.Option value={""}>负责人</Select.Option>
           {users.map((user) => (
-            <Select.Option key={user.id} value={user.id}>
+            <Select.Option key={user.id} value={String(user.id)}>
               {user.name}
             </Select.Option>
           ))}
