@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-05 13:30:55
- * @LastEditTime: 2022-12-05 17:16:54
+ * @LastEditTime: 2022-12-05 18:23:33
  */
 import { useMemo } from "react";
 import { useHttp } from "utils/http";
@@ -22,7 +22,6 @@ export const useProjectsSearchParams = () => {
 
 // 编辑请求
 export const useEditProject = () => {
-  console.log("调用了");
   const { run, ...asyncResult } = useAsync();
   const client = useHttp();
   const mutate = (params: Partial<Project>) => {
@@ -33,8 +32,6 @@ export const useEditProject = () => {
       })
     );
   };
-
-  console.log("?");
 
   return {
     mutate,

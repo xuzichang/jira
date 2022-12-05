@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-18 16:27:03
- * @LastEditTime: 2022-11-18 19:02:05
+ * @LastEditTime: 2022-12-05 18:26:58
  */
 import { useState } from "react";
 
@@ -31,6 +31,12 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+
+  // retry 被调用时重新跑一边run，使得state刷新[project收藏后页面刷新]
+  // react的useState惰性初始，换成套娃/使用useRef保存函数。
+  // 不然会无限循环
+  const [retry, setRetry] = useState(() => () => {});
+
   const setData = (data: D) =>
     setState({
       data,
@@ -45,10 +51,21 @@ export const useAsync = <D>(
     });
 
   // 用来触发异步请求
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("请传入 Promise 类型数据");
     }
+
+    // 存储函数，但是会无限循环
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig);
+      }
+    });
+
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
@@ -63,6 +80,7 @@ export const useAsync = <D>(
         return error;
       });
   };
+
   return {
     isIdle: state.stat === "idle",
     isLoading: state.stat === "loading",
@@ -71,6 +89,8 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    // retry 被调用时重新跑一边run，使得state刷新
+    retry,
     ...state,
   };
 };

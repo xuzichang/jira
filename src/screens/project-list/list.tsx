@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2022-12-05 17:05:10
+ * @LastEditTime: 2022-12-05 18:27:55
  */
 import { Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -20,11 +20,13 @@ export interface Project {
 }
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props.refresh);
   return (
     <Table
       pagination={false}

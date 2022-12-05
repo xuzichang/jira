@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-12-05 13:35:21
+ * @LastEditTime: 2022-12-05 18:28:02
  */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
@@ -26,7 +26,12 @@ export const ProjectListScreen = () => {
   // const [keys] =useState<('name'|'personId')[]>(['name','personId'])
 
   const [param, setParam] = useProjectsSearchParams();
-  const { isLoading, error, data: list } = UseProject(useDebounce(param, 200));
+  const {
+    isLoading,
+    error,
+    data: list,
+    retry,
+  } = UseProject(useDebounce(param, 200));
   const { data: users } = useUsers();
 
   return (
@@ -36,7 +41,12 @@ export const ProjectListScreen = () => {
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} users={users || []} dataSource={list || []} />
+      <List
+        refresh={retry}
+        loading={isLoading}
+        users={users || []}
+        dataSource={list || []}
+      />
     </Contarin>
   );
 };
