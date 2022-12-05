@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-09-23 14:24:41
- * @LastEditTime: 2022-12-03 18:20:46
+ * @LastEditTime: 2022-12-05 18:47:58
  */
 
 import { useEffect, useRef, useState } from "react";
@@ -98,3 +98,17 @@ export const useDocumentTitle = (
 
 // 重置路由
 export const resetRoute = () => (window.location.href = window.location.origin);
+
+// 返回组件的挂载状态，如果还没挂载或已经卸载，返回false。反之，返回true
+export const useMountedRef = () => {
+  const mountedRef = useRef(false);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  });
+
+  return mountedRef;
+};

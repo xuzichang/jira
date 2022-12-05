@@ -1,9 +1,10 @@
 /*
  * @Description:
  * @Date: 2022-11-18 16:27:03
- * @LastEditTime: 2022-12-05 18:26:58
+ * @LastEditTime: 2022-12-05 18:49:27
  */
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   error: Error | null;
@@ -31,6 +32,8 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+
+  const mountedRef = useMountedRef();
 
   // retry 被调用时重新跑一边run，使得state刷新[project收藏后页面刷新]
   // react的useState惰性初始，换成套娃/使用useRef保存函数。
@@ -69,7 +72,8 @@ export const useAsync = <D>(
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
-        setData(data);
+        // 组件已经挂载/未被卸载
+        if (mountedRef.current) setData(data);
         return data;
       })
       .catch((error) => {
