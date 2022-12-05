@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2022-12-03 20:19:46
+ * @LastEditTime: 2022-12-05 13:35:21
  */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
@@ -16,18 +16,18 @@ import { useAsync } from "utils/use-async";
 import { UseProject } from "utils/project";
 import { useUsers } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
-  // const [keys] =useState<('name'|'personId')[]>(['name','personId'])
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-
-  const debouncedParam = useDebounce(param, 200);
-  const { isLoading, error, data: list } = UseProject(debouncedParam);
-  const { data: users } = useUsers();
-
   // 使用自定义的hook实现动态标题
   useDocumentTitle("项目列表", false);
+
+  // const [keys] =useState<('name'|'personId')[]>(['name','personId'])
+
+  const [param, setParam] = useProjectsSearchParams();
+  const { isLoading, error, data: list } = UseProject(useDebounce(param, 200));
+  const { data: users } = useUsers();
 
   return (
     <Contarin>

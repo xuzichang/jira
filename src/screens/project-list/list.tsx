@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2022-12-03 17:49:24
+ * @LastEditTime: 2022-12-05 13:28:12
  */
 import { Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -9,9 +9,9 @@ import dayjs from "dayjs";
 import React from "react";
 import { User } from "./search-pannel";
 export interface Project {
-  id: string;
+  id: number;
   name: string;
-  personId: string;
+  personId: number;
   pin: string;
   organization: string;
   created: number;
