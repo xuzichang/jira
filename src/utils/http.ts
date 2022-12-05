@@ -1,4 +1,10 @@
+/*
+ * @Description:
+ * @Date: 2022-11-16 11:21:38
+ * @LastEditTime: 2022-12-05 19:03:32
+ */
 import qs from "qs";
+import { useCallback } from "react";
 import * as auth from "auth-provider";
 import { useAuth } from "context/auth-context";
 
@@ -51,6 +57,9 @@ export const http = async (
 // 上面的还需要手动传入token，使用useHttp可以自动从useAuth中获取用户
 export const useHttp = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: Parameters<typeof http>) =>
-    http(endpoint, { ...config, token: user?.token });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof http>) =>
+      http(endpoint, { ...config, token: user?.token }),
+    [user?.token]
+  );
 };
