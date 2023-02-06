@@ -1,9 +1,9 @@
 /*
  * @Description:
  * @Date: 2022-11-18 16:27:03
- * @LastEditTime: 2022-12-05 19:08:14
+ * @LastEditTime: 2023-02-06 18:28:49
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, useReducer } from "react";
 import { useMountedRef } from "utils";
 
 interface State<D> {
@@ -22,18 +22,30 @@ const defaultConfig = {
   throwOnError: false,
 };
 
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const mountedRef = useMountedRef();
+
+  return useCallback(
+    (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
+    [dispatch, mountedRef]
+  );
+};
+
 export const useAsync = <D>(
   initialState?: State<D>,
   initialConfig?: typeof defaultConfig
 ) => {
   const config = { ...defaultConfig, ...initialConfig };
 
-  const [state, setState] = useState<State<D>>({
-    ...defaultInitialState,
-    ...initialState,
-  });
+  const [state, dispatch] = useReducer(
+    (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }),
+    {
+      ...defaultInitialState,
+      ...initialState,
+    }
+  );
 
-  const mountedRef = useMountedRef();
+  const safeDispatch = useSafeDispatch(dispatch);
 
   // retry 被调用时重新跑一边run，使得state刷新[project收藏后页面刷新]
   // react的useState惰性初始，换成套娃/使用useRef保存函数。
@@ -42,21 +54,21 @@ export const useAsync = <D>(
 
   const setData = useCallback(
     (data: D) =>
-      setState({
+      safeDispatch({
         data,
         stat: "success",
         error: null,
       }),
-    []
+    [safeDispatch]
   );
   const setError = useCallback(
     (error: Error) =>
-      setState({
+      safeDispatch({
         error,
         stat: "error",
         data: null,
       }),
-    []
+    [safeDispatch]
   );
 
   // 用来触发异步请求
@@ -74,12 +86,12 @@ export const useAsync = <D>(
       });
 
       // 使用prevState，避免因为usecallback陷入state的无限循环
-      setState((prevState) => ({ ...prevState, stat: "loading" }));
+      safeDispatch({ stat: "loading" });
 
       return promise
         .then((data) => {
           // 组件已经挂载/未被卸载
-          if (mountedRef.current) setData(data);
+          setData(data);
           return data;
         })
         .catch((error) => {
@@ -90,7 +102,7 @@ export const useAsync = <D>(
           return error;
         });
     },
-    [config.throwOnError, mountedRef, setData, setError]
+    [config.throwOnError, setData, setError, safeDispatch]
   );
 
   return {
