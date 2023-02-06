@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2023-02-06 12:49:40
+ * @LastEditTime: 2023-02-06 13:13:28
  */
 import { Dropdown, Menu, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -22,7 +22,8 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
@@ -91,7 +92,7 @@ export const List = ({ users, ...props }: ListProps) => {
                     <Menu.Item key={"edit"}>
                       <ButtonNoPadding
                         type="link"
-                        onClick={() => props.setProjectModalOpen(true)}
+                        // onClick={() => props.setProjectModalOpen(true)}
                       >
                         编辑
                       </ButtonNoPadding>

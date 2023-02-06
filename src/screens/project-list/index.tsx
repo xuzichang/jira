@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2023-02-06 12:49:11
+ * @LastEditTime: 2023-02-06 13:01:33
  */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
@@ -20,7 +20,8 @@ import { useProjectsSearchParams } from "./util";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   // 使用自定义的hook实现动态标题
   useDocumentTitle("项目列表", false);
@@ -40,9 +41,7 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row justify={"space-between"}>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
-          创建项目
-        </Button>
+        {props.projectButton}
       </Row>
 
       <SearchPanel users={users || []} param={param} setParam={setParam} />
@@ -50,7 +49,7 @@ export const ProjectListScreen = (props: {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
+        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         users={users || []}

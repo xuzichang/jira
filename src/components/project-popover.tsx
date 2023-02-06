@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-02-06 12:05:02
- * @LastEditTime: 2023-02-06 12:32:34
+ * @LastEditTime: 2023-02-06 12:59:56
  */
 import styled from "@emotion/styled";
 import { Button, Divider, List, Popover, Typography } from "antd";
@@ -10,7 +10,8 @@ import { UseProjects } from "utils/project";
 import { ButtonNoPadding } from "./lib";
 
 export const ProjectPopover = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
+  // setProjectModalOpen: (isOpen: boolean) => void;
+  projectButton: JSX.Element;
 }) => {
   const { data: projects, isLoading } = UseProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
@@ -26,12 +27,7 @@ export const ProjectPopover = (props: {
         ))}
       </List>
       <Divider />
-      <ButtonNoPadding
-        onClick={() => props.setProjectModalOpen(true)}
-        type={"link"}
-      >
-        创建项目
-      </ButtonNoPadding>
+      {props.projectButton}
     </ContentContainer>
   );
   return (
