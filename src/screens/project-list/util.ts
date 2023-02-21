@@ -1,9 +1,10 @@
 /*
  * @Description:
  * @Date: 2022-12-05 13:30:55
- * @LastEditTime: 2023-02-21 20:38:49
+ * @LastEditTime: 2023-02-21 21:19:27
  */
 import { useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useHttp } from "utils/http";
 import { useProject } from "utils/project";
 import { useUrlQueryParam } from "utils/url";
@@ -19,6 +20,11 @@ export const useProjectsSearchParams = () => {
     ),
     setParam,
   ] as const;
+};
+
+export const useProjectQueryKey = () => {
+  const [param] = useSearchParams();
+  return ["projects", param];
 };
 
 // 定义hook，扮演全局管理器的作用，可以取代redux/context

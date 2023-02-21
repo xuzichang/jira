@@ -1,7 +1,7 @@
 /*
  * @Description: 弹出框
  * @Date: 2023-02-06 11:58:36
- * @LastEditTime: 2023-02-21 20:36:36
+ * @LastEditTime: 2023-02-21 21:17:49
  */
 import styled from "@emotion/styled";
 import { Button, Drawer, Form, Input, Spin } from "antd";
@@ -10,7 +10,7 @@ import { ErrorBox } from "components/lib";
 import { UserSelect } from "components/user-select";
 import React, { useEffect } from "react";
 import { useAddProject, useEditProject } from "utils/project";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectQueryKey } from "./util";
 
 export const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
@@ -18,7 +18,11 @@ export const ProjectModal = () => {
 
   const useMutateProject = editingProject ? useEditProject : useAddProject;
   // hook不能再函数中直接使用
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject();
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = useMutateProject(useProjectQueryKey());
 
   const [form] = useForm();
   const onFinish = (values: any) => {
