@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2023-02-06 13:01:33
+ * @LastEditTime: 2023-02-21 11:25:23
  */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
@@ -16,18 +16,17 @@ import { useAsync } from "utils/use-async";
 import { UseProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
-import { useProjectsSearchParams } from "./util";
+import { useProjectModal, useProjectsSearchParams } from "./util";
+import { ButtonNoPadding } from "components/lib";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-export const ProjectListScreen = (props: {
-  // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
-}) => {
+export const ProjectListScreen = () => {
   // 使用自定义的hook实现动态标题
   useDocumentTitle("项目列表", false);
 
   // const [keys] =useState<('name'|'personId')[]>(['name','personId'])
 
+  const { open } = useProjectModal();
   const [param, setParam] = useProjectsSearchParams();
   const {
     isLoading,
@@ -41,7 +40,9 @@ export const ProjectListScreen = (props: {
     <Container>
       <Row justify={"space-between"}>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding onClick={open} type={"link"}>
+          创建项目
+        </ButtonNoPadding>
       </Row>
 
       <SearchPanel users={users || []} param={param} setParam={setParam} />
@@ -49,7 +50,6 @@ export const ProjectListScreen = (props: {
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         users={users || []}

@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-05 13:30:55
- * @LastEditTime: 2022-12-05 18:23:33
+ * @LastEditTime: 2023-02-21 11:33:36
  */
 import { useMemo } from "react";
 import { useHttp } from "utils/http";
@@ -53,5 +53,30 @@ export const useAddProject = () => {
   return {
     mutate,
     ...asyncResult,
+  };
+};
+
+// 定义hook，扮演全局管理器的作用，可以取代redux/context
+export const useProjectModal = () => {
+  const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
+    "projectCreate",
+  ]);
+
+  const open = () => setProjectCreate({ projectCreate: true });
+  const close = () => setProjectCreate({ projectCreate: undefined });
+
+  // as const 返回[]，使用hook时名字可以随便命名
+  // 如，const [created,openxx,closexx] = useProjectModal
+  // 返回参数多的可以选择返回对象{}
+  // return [
+  //   projectCreate === 'true',
+  //   open,
+  //   close
+  // ] as const
+
+  return {
+    projectModalOpen: projectCreate === "true",
+    open,
+    close,
   };
 };

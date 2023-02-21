@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2023-02-06 13:13:28
+ * @LastEditTime: 2023-02-21 11:21:04
  */
 import { Dropdown, Menu, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -23,7 +23,6 @@ interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
   // setProjectModalOpen: (isOpen: boolean) => void;
-  projectButton: JSX.Element;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
