@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2023-02-21 11:21:04
+ * @LastEditTime: 2023-02-21 20:01:23
  */
 import { Dropdown, Menu, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
@@ -9,8 +9,9 @@ import dayjs from "dayjs";
 import React from "react";
 import { User } from "./search-pannel";
 import { Pin } from "components/pin";
-import { useEditProject } from "./util";
 import { ButtonNoPadding } from "components/lib";
+import { useEditProject } from "utils/project";
+import { useProjectModal } from "./util";
 export interface Project {
   id: number;
   name: string;
@@ -21,14 +22,13 @@ export interface Project {
 }
 interface ListProps extends TableProps<Project> {
   users: User[];
-  refresh?: () => void;
-  // setProjectModalOpen: (isOpen: boolean) => void;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.refresh);
+  const { startEdit } = useProjectModal();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const editProject = (id: number) => () => startEdit(id);
   return (
     <Table
       pagination={false}
@@ -88,14 +88,10 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>
-                      <ButtonNoPadding
-                        type="link"
-                        // onClick={() => props.setProjectModalOpen(true)}
-                      >
-                        编辑
-                      </ButtonNoPadding>
+                    <Menu.Item onClick={editProject(project.id)} key={"edit"}>
+                      编辑
                     </Menu.Item>
+                    <Menu.Item key={"delete"}>删除</Menu.Item>
                   </Menu>
                 }
               >

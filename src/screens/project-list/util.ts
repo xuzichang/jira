@@ -1,10 +1,11 @@
 /*
  * @Description:
  * @Date: 2022-12-05 13:30:55
- * @LastEditTime: 2023-02-21 11:33:36
+ * @LastEditTime: 2023-02-21 20:38:49
  */
 import { useMemo } from "react";
 import { useHttp } from "utils/http";
+import { useProject } from "utils/project";
 import { useUrlQueryParam } from "utils/url";
 import { useAsync } from "utils/use-async";
 import { Project } from "./list";
@@ -20,50 +21,28 @@ export const useProjectsSearchParams = () => {
   ] as const;
 };
 
-// 编辑请求
-export const useEditProject = () => {
-  const { run, ...asyncResult } = useAsync();
-  const client = useHttp();
-  const mutate = (params: Partial<Project>) => {
-    return run(
-      client(`projects/${params.id}`, {
-        data: params,
-        method: "PATCH",
-      })
-    );
-  };
-
-  return {
-    mutate,
-    ...asyncResult,
-  };
-};
-// 添加
-export const useAddProject = () => {
-  const { run, ...asyncResult } = useAsync();
-  const client = useHttp();
-  const mutate = (params: Partial<Project>) => {
-    return run(
-      client(`project/${params.id}`, {
-        data: params,
-        method: "POST",
-      })
-    );
-  };
-  return {
-    mutate,
-    ...asyncResult,
-  };
-};
-
 // 定义hook，扮演全局管理器的作用，可以取代redux/context
 export const useProjectModal = () => {
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
     "projectCreate",
   ]);
 
+  const [{ editingProjectId }, setEditingProjectId] = useUrlQueryParam([
+    "editingProjectId",
+  ]);
+  const { data: editingProject, isLoading } = useProject(
+    Number(editingProjectId)
+  );
+
   const open = () => setProjectCreate({ projectCreate: true });
-  const close = () => setProjectCreate({ projectCreate: undefined });
+  const close = () => {
+    console.log(projectCreate);
+
+    setProjectCreate({ projectCreate: undefined });
+    setEditingProjectId({ editingProjectId: undefined });
+  };
+  const startEdit = (id: number) =>
+    setEditingProjectId({ editingProjectId: id });
 
   // as const 返回[]，使用hook时名字可以随便命名
   // 如，const [created,openxx,closexx] = useProjectModal
@@ -75,8 +54,11 @@ export const useProjectModal = () => {
   // ] as const
 
   return {
-    projectModalOpen: projectCreate === "true",
+    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
     open,
     close,
+    startEdit,
+    editingProject,
+    isLoading,
   };
 };

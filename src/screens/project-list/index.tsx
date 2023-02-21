@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2023-02-21 11:25:23
+ * @LastEditTime: 2023-02-21 11:52:37
  */
 import { List, Project } from "./list";
 import { SearchPanel } from "./search-pannel";
@@ -17,7 +17,7 @@ import { UseProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ButtonNoPadding } from "components/lib";
+import { ButtonNoPadding, ErrorBox } from "components/lib";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -28,12 +28,7 @@ export const ProjectListScreen = () => {
 
   const { open } = useProjectModal();
   const [param, setParam] = useProjectsSearchParams();
-  const {
-    isLoading,
-    error,
-    data: list,
-    retry,
-  } = UseProjects(useDebounce(param, 200));
+  const { isLoading, error, data: list } = UseProjects(useDebounce(param, 200));
   const { data: users } = useUsers();
 
   return (
@@ -46,15 +41,8 @@ export const ProjectListScreen = () => {
       </Row>
 
       <SearchPanel users={users || []} param={param} setParam={setParam} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
-      <List
-        refresh={retry}
-        loading={isLoading}
-        users={users || []}
-        dataSource={list || []}
-      />
+      <ErrorBox error={error} />
+      <List loading={isLoading} users={users || []} dataSource={list || []} />
     </Container>
   );
 };
