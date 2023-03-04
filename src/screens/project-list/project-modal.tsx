@@ -1,7 +1,7 @@
 /*
  * @Description: 弹出框
  * @Date: 2023-02-06 11:58:36
- * @LastEditTime: 2023-02-21 21:17:49
+ * @LastEditTime: 2023-03-04 15:20:05
  */
 import styled from "@emotion/styled";
 import { Button, Drawer, Form, Input, Spin } from "antd";
@@ -32,6 +32,11 @@ export const ProjectModal = () => {
     });
   };
 
+  const closeModal = () => {
+    form.resetFields();
+    close();
+  };
+
   const title = editingProject ? "编辑项目" : "创建项目";
 
   // 表单改变时重置页面
@@ -42,7 +47,7 @@ export const ProjectModal = () => {
   return (
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={closeModal}
       open={projectModalOpen}
       width={"100%"}
     >

@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-11-18 16:58:21
  */
 import { useEffect } from "react";
-import { User } from "screens/project-list/search-pannel";
+import { User } from "types/user";
 import { cleanObject } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";

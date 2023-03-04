@@ -3,7 +3,8 @@
  * @Date: 2022-04-16 11:54:36
  * @LastEditTime: 2023-02-21 11:52:37
  */
-import { List, Project } from "./list";
+import { List } from "./list";
+import { Project } from "../../types/project";
 import { SearchPanel } from "./search-pannel";
 import React, { useMemo } from "react";
 import { useEffect, useState } from "react";

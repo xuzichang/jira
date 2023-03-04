@@ -3,7 +3,7 @@
  * @Date: 2022-11-16 10:09:27
  * @LastEditTime: 2022-11-18 17:26:17
  */
-import { User } from "screens/project-list/search-pannel";
+import { User } from "types/user";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

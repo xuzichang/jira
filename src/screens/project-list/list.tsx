@@ -1,25 +1,18 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:56:00
- * @LastEditTime: 2023-02-21 21:29:12
+ * @LastEditTime: 2023-03-04 15:32:56
  */
 import { Dropdown, Menu, Modal, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import React from "react";
-import { User } from "./search-pannel";
+import { User } from "../../types/user";
 import { Pin } from "components/pin";
 import { ButtonNoPadding } from "components/lib";
 import { useDeleteProject, useEditProject } from "utils/project";
 import { useProjectModal, useProjectQueryKey } from "./util";
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
+import { Project } from "../../types/project";
 interface ListProps extends TableProps<Project> {
   users: User[];
 }

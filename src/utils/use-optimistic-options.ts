@@ -1,5 +1,5 @@
 import { QueryKey, useQueryClient } from "react-query";
-import { Project } from "screens/project-list/list";
+import { Project } from "types/project";
 
 // 乐观更新
 // 生成OnSuccess、OnError之类的config

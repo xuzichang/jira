@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-05 13:30:55
- * @LastEditTime: 2023-02-21 21:53:40
+ * @LastEditTime: 2023-03-04 15:21:37
  */
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useHttp } from "utils/http";
 import { useProject } from "utils/project";
 import { useSetUrlSearchParam, useUrlQueryParam } from "utils/url";
 import { useAsync } from "utils/use-async";
-import { Project } from "./list";
+import { Project } from "../../types/project";
 // 获取链接中参数
 export const useProjectsSearchParams = () => {
   const [param, setParam] = useUrlQueryParam(["name", "personId"]);
@@ -57,7 +57,7 @@ export const useProjectModal = () => {
   // ] as const
 
   return {
-    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
+    projectModalOpen: projectCreate === "true" || Boolean(editingProjectId),
     open,
     close,
     startEdit,

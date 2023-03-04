@@ -1,15 +1,16 @@
 /*
  * @Description:
  * @Date: 2022-11-16 10:34:37
- * @LastEditTime: 2022-11-18 18:10:44
+ * @LastEditTime: 2023-03-04 15:23:32
  */
 import React, { useState, ReactNode } from "react";
 import * as auth from "auth-provider";
-import { User } from "screens/project-list/search-pannel";
+import { User } from "types/user";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
+import { useQueryClient } from "react-query";
 
 interface AuthForm {
   username: string;
@@ -50,10 +51,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setData: setUser,
   } = useAsync<User | null>();
 
+  const queryClient = useQueryClient();
+
   // 调用auth-provider中的方法
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+      queryClient.clear();
+    });
 
   useMount(() => {
     run(bootstrapUser());
