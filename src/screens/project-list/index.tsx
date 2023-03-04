@@ -1,11 +1,11 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2023-02-21 11:52:37
+ * @LastEditTime: 2023-03-04 17:06:47
  */
 import { List } from "./list";
 import { Project } from "../../types/project";
-import { SearchPanel } from "./search-pannel";
+import { SearchPanel } from "./search-panel";
 import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useDocumentTitle, useMount } from "utils";
