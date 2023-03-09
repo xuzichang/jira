@@ -1,7 +1,7 @@
 import React from "react";
 import { Kanban } from "types/kanban";
-import { UseTasks } from "utils/task";
-import { useTasksSearchParams } from "./utils";
+import { useTask, UseTasks } from "utils/task";
+import { useTasksModal, useTasksSearchParams } from "./utils";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 import { UseTasksTypes } from "utils/task-type";
@@ -27,12 +27,19 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   const { data: allTask } = UseTasks(useTasksSearchParams());
   const tasks = allTask?.filter((task) => task.kanbanId === kanban.id);
 
+  // 点击card进行编辑
+  const { startEdit } = useTasksModal();
+
   return (
     <Container>
       <h3>{kanban.name}</h3>
       <TaskContainer>
         {tasks?.map((task) => (
-          <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
+          <Card
+            onClick={() => startEdit(task.id)}
+            style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+            key={task.id}
+          >
             <div>{task.name}</div>
             <TaskTypeIcon id={task.typeId} />
           </Card>

@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-03 18:01:06
- * @LastEditTime: 2023-03-09 16:24:48
+ * @LastEditTime: 2023-03-09 17:27:15
  */
 /*
  * @Description: 看板
@@ -18,6 +18,7 @@ import { UseTasks } from "utils/task";
 import { CreateKanban } from "./create-kanban";
 import { KanbanColumn } from "./kanban-column";
 import { SearchPanel } from "./search-panel";
+import { TaskModal } from "./task-modal";
 import {
   useKanbanSearchParams,
   useProjectInUrl,
@@ -47,6 +48,7 @@ export const KanbanScreen = () => {
           <CreateKanban />
         </ColumnContainer>
       )}
+      <TaskModal />
     </ScreenContainer>
   );
 };

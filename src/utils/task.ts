@@ -1,12 +1,12 @@
 /*
  * @Description:
  * @Date: 2023-03-04 15:43:19
- * @LastEditTime: 2023-03-04 15:44:06
+ * @LastEditTime: 2023-03-09 17:29:55
  */
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { Task } from "types/task";
 import { useHttp } from "./http";
-import { useAddConfig } from "./use-optimistic-options";
+import { useAddConfig, useEditConfig } from "./use-optimistic-options";
 
 export const UseTasks = (param?: Partial<Task>) => {
   const client = useHttp();
@@ -27,5 +27,26 @@ export const useAddTask = (queryKey: QueryKey) => {
         method: "POST",
       }),
     useAddConfig(queryKey)
+  );
+};
+
+// 获取详情
+export const useTask = (id?: number) => {
+  const client = useHttp();
+  return useQuery<Task>(["task", { id }], () => client(`tasks/${id}`), {
+    enabled: Boolean(id),
+  });
+};
+
+// 编辑请求
+export const useEditTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks/${params.id}`, {
+        method: "PATCH",
+        data: params,
+      }),
+    useEditConfig(queryKey)
   );
 };

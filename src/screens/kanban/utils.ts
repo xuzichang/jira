@@ -1,11 +1,13 @@
 /*
  * @Description:
  * @Date: 2023-03-04 15:47:58
- * @LastEditTime: 2023-03-04 17:04:08
+ * @LastEditTime: 2023-03-09 17:44:22
  */
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { useLocation } from "react-router";
+import { useDebounce } from "utils";
 import { useProject } from "utils/project";
+import { useTask } from "utils/task";
 import { useUrlQueryParam } from "utils/url";
 
 // 获取路由链接中的项目id
@@ -29,6 +31,8 @@ export const useTasksSearchParams = () => {
     "tagId",
   ]);
   const projectId = useProjectIdUrl();
+
+  // const debouncedName = useDebounce(param.name, 200)
   return useMemo(
     () => ({
       projectId,
@@ -41,3 +45,26 @@ export const useTasksSearchParams = () => {
   );
 };
 export const useTasksQueryKey = () => ["tasks", useTasksSearchParams()];
+
+export const useTasksModal = () => {
+  const [{ editingTaskId }, setEditingTaskId] = useUrlQueryParam([
+    "editingTaskId",
+  ]);
+  const { data: editingTask, isLoading } = useTask(Number(editingTaskId));
+  const startEdit = useCallback(
+    (id: number) => {
+      setEditingTaskId({ editingTaskId: id });
+    },
+    [setEditingTaskId]
+  );
+  const close = useCallback(() => {
+    setEditingTaskId({ editingTaskId: "" });
+  }, [setEditingTaskId]);
+  return {
+    editingTaskId,
+    editingTask,
+    startEdit,
+    close,
+    isLoading,
+  };
+};
