@@ -1,7 +1,7 @@
 /*
  * @Description: 项目看板
  * @Date: 2022-12-03 17:35:16
- * @LastEditTime: 2023-03-09 15:20:09
+ * @LastEditTime: 2023-03-09 16:28:17
  */
 import React from "react";
 import { Link } from "react-router-dom";
@@ -57,8 +57,10 @@ const Aside = styled.aside`
 const Main = styled.div`
   box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.1);
   display: flex;
+  overflow: hidden;
 `;
 const Container = styled.div`
   display: grid;
   grid-template-columns: 16rem 1fr;
+  overflow: hidden;
 `;
