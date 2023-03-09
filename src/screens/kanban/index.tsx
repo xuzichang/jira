@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-03 18:01:06
- * @LastEditTime: 2023-03-04 17:21:51
+ * @LastEditTime: 2023-03-09 15:12:44
  */
 /*
  * @Description: 看板
@@ -9,6 +9,7 @@
  * @LastEditTime: 2023-03-04 15:55:59
  */
 import styled from "@emotion/styled";
+import { ScreenContainer } from "components/lib";
 import React from "react";
 import { useDocumentTitle } from "utils";
 import { UseKanbans } from "utils/kanban";
@@ -22,7 +23,7 @@ export const KanbanScreen = () => {
   const { data: currentProject } = useProjectInUrl();
   const { data: kanbans } = UseKanbans(useKanbanSearchParams());
   return (
-    <div>
+    <ScreenContainer>
       <h1>{currentProject?.name}看板</h1>
       <SearchPanel />
       <ColumnContainer>
@@ -30,12 +31,12 @@ export const KanbanScreen = () => {
           <KanbanColumn kanban={kanban} key={kanban.id} />
         ))}
       </ColumnContainer>
-    </div>
+    </ScreenContainer>
   );
 };
 
 const ColumnContainer = styled.div`
   display: flex;
-  overflow: hidden;
-  margin-right: 2rem;
+  overflow-x: scroll;
+  flex: 1;
 `;

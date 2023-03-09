@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-04-16 11:54:36
- * @LastEditTime: 2023-03-04 17:06:47
+ * @LastEditTime: 2023-03-09 15:36:29
  */
 import { List } from "./list";
 import { Project } from "../../types/project";
@@ -18,7 +18,7 @@ import { UseProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
 import { useProjectModal, useProjectsSearchParams } from "./util";
-import { ButtonNoPadding, ErrorBox } from "components/lib";
+import { ButtonNoPadding, ErrorBox, ScreenContainer } from "components/lib";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 export const ProjectListScreen = () => {
@@ -33,7 +33,7 @@ export const ProjectListScreen = () => {
   const { data: users } = useUsers();
 
   return (
-    <Container>
+    <ScreenContainer>
       <Row justify={"space-between"}>
         <h1>项目列表</h1>
         <ButtonNoPadding onClick={open} type={"link"}>
@@ -44,12 +44,8 @@ export const ProjectListScreen = () => {
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       <ErrorBox error={error} />
       <List loading={isLoading} users={users || []} dataSource={list || []} />
-    </Container>
+    </ScreenContainer>
   );
 };
 
 ProjectListScreen.whyDidYouRender = false;
-
-const Container = styled.div`
-  padding: 3.2rem;
-`;

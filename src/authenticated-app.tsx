@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-16 11:12:13
- * @LastEditTime: 2023-02-21 11:31:17
+ * @LastEditTime: 2023-03-09 15:24:35
  */
 import styled from "@emotion/styled";
 import { ButtonNoPadding, Row } from "components/lib";
@@ -94,7 +94,7 @@ const User = () => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
 `;
 
@@ -106,4 +106,7 @@ const Header = styled(Row)`
 const HeaderLeft = styled(Row)``;
 const HeaderRight = styled.div``;
 
-const Main = styled.main``;
+const Main = styled.main`
+  display: flex;
+  overflow: hidden; // 页面在一个屏幕内，不要滚动
+`;
