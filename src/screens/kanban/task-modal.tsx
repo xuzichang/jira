@@ -1,8 +1,13 @@
+/*
+ * @Description:
+ * @Date: 2023-03-09 17:05:53
+ * @LastEditTime: 2023-03-19 17:18:20
+ */
 import React, { useEffect } from "react";
 import { useForm } from "antd/es/form/Form";
-import { useEditTask } from "utils/task";
+import { useDeleteTask, useEditTask } from "utils/task";
 import { useTasksModal, useTasksQueryKey } from "./utils";
-import { Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { UserSelect } from "components/user-select";
 import { TaskTypeSelect } from "components/task-type-select";
 
@@ -17,6 +22,7 @@ export const TaskModal = () => {
   const { mutateAsync: editTask, isLoading: editLoading } = useEditTask(
     useTasksQueryKey()
   );
+  const { mutate: deleteTask } = useDeleteTask(useTasksQueryKey());
 
   const onCancel = () => {
     close();
@@ -28,19 +34,31 @@ export const TaskModal = () => {
     close();
   };
 
+  const startDelete = () => {
+    close();
+    Modal.confirm({
+      okText: "确定",
+      cancelText: "取消",
+      title: "确定取消任务吗",
+      onOk() {
+        return deleteTask({ id: Number(editingTaskId) });
+      },
+    });
+  };
   useEffect(() => {
     form.setFieldsValue(editingTask);
   }, [form, editingTask]);
 
   return (
     <Modal
+      forceRender={true}
       onCancel={onCancel}
       onOk={onOk}
       okText={"确认"}
       cancelText={"取消"}
       confirmLoading={editLoading}
       title={"编辑任务"}
-      visible={!!editingTaskId}
+      open={!!editingTaskId}
     >
       <Form {...layout} initialValues={editingTask} form={form}>
         <Form.Item
@@ -57,6 +75,15 @@ export const TaskModal = () => {
           <TaskTypeSelect />
         </Form.Item>
       </Form>
+      <div style={{ textAlign: "right" }}>
+        <Button
+          onClick={startDelete}
+          style={{ fontSize: "14px" }}
+          size={"small"}
+        >
+          删除
+        </Button>
+      </div>
     </Modal>
   );
 };
