@@ -2,6 +2,13 @@ html {
   font-size: 62.5%;
 }
 
-html body #root .APP {
+html body #root .App {
   min-height: 100vh;
+}
+#root {
+  position: relative;
+}
+
+.App {
+  position: absolute;
 }
