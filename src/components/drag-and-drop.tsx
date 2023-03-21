@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-03-21 15:16:53
- * @LastEditTime: 2023-03-21 16:28:18
+ * @LastEditTime: 2023-03-21 17:30:06
  */
 import React, { ReactNode } from "react";
 import {
@@ -59,7 +59,6 @@ export const Drag = ({ children, ...props }: DragChildProps) => {
             ...provided.draggableProps,
             ...provided.dragHandleProps,
             ref: provided.innerRef,
-            name: provided.innerRef,
           });
         }
         return <div />;

@@ -1,7 +1,7 @@
 /*
  * @Description: 看板
  * @Date: 2022-12-03 18:01:06
- * @LastEditTime: 2023-03-21 17:16:17
+ * @LastEditTime: 2023-03-21 17:28:50
  */
 import styled from "@emotion/styled";
 import { Spin } from "antd";
@@ -39,23 +39,29 @@ export const KanbanScreen = () => {
         {isLoading ? (
           <Spin size={"large"} />
         ) : (
-          <Drop type={"COLUMN"} direction={"horizontal"} droppableId={"kanban"}>
-            <ColumnContainer>
-              {kanbans?.map((kanban, index) => (
-                <Drag
-                  key={kanban.id}
-                  draggableId={"kanban" + kanban.id}
-                  index={index}
-                >
-                  {/* 外面得包一个<div/>，不然会报错：找不到drag handle */}
-                  <div>
-                    <KanbanColumn kanban={kanban} key={kanban.id} />
-                  </div>
-                </Drag>
-              ))}
-              <CreateKanban />
-            </ColumnContainer>
-          </Drop>
+          <ColumnContainer>
+            <Drop
+              type={"COLUMN"}
+              direction={"horizontal"}
+              droppableId={"kanban"}
+            >
+              <DropChild style={{ display: "flex" }}>
+                {kanbans?.map((kanban, index) => (
+                  <Drag
+                    key={kanban.id}
+                    draggableId={"kanban" + kanban.id}
+                    index={index}
+                  >
+                    {/* 外面得包一个<div/>，不然会报错：找不到drag handle */}
+                    <div>
+                      <KanbanColumn kanban={kanban} key={kanban.id} />
+                    </div>
+                  </Drag>
+                ))}
+              </DropChild>
+            </Drop>
+            <CreateKanban />
+          </ColumnContainer>
         )}
         <TaskModal />
       </ScreenContainer>
@@ -63,7 +69,7 @@ export const KanbanScreen = () => {
   );
 };
 
-export const ColumnContainer = styled(DropChild)`
+export const ColumnContainer = styled.div`
   display: flex;
   overflow-x: scroll;
   flex: 1;
