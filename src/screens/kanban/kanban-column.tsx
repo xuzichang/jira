@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-03-04 15:59:19
- * @LastEditTime: 2023-03-21 17:11:44
+ * @LastEditTime: 2023-03-21 17:41:00
  */
 import React from "react";
 import { Kanban } from "types/kanban";
@@ -20,6 +20,7 @@ import { CreateTask } from "./create-task";
 import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeleteKanban } from "utils/kanban";
+import { Drag, Drop, DropChild } from "components/drag-and-drop";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = UseTasksTypes();
@@ -69,9 +70,26 @@ export const KanbanColumn = React.forwardRef<
         <More kanban={kanban} key={kanban.id} />
       </Row>
       <TaskContainer>
-        {tasks?.map((task) => (
-          <TaskCard task={task} key={task.id} />
-        ))}
+        <Drop
+          type={"ROW"}
+          direction={"vertical"}
+          droppableId={"task" + kanban.id}
+        >
+          <DropChild>
+            {tasks?.map((task, taskIndex) => (
+              <Drag
+                key={task.id}
+                index={taskIndex}
+                draggableId={"task" + task.id}
+              >
+                {/* 用<div/>解决provided.innerRef has not been provided with a HTMLElement */}
+                <div>
+                  <TaskCard task={task} key={task.id} />
+                </div>
+              </Drag>
+            ))}
+          </DropChild>
+        </Drop>
         <CreateTask kanbanId={kanban.id} />
       </TaskContainer>
     </Container>
