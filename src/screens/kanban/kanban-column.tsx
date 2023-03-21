@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-03-04 15:59:19
- * @LastEditTime: 2023-03-19 17:12:20
+ * @LastEditTime: 2023-03-21 17:11:44
  */
 import React from "react";
 import { Kanban } from "types/kanban";
@@ -56,24 +56,27 @@ const TaskCard = ({ task }: { task: Task }) => {
   );
 };
 
-export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
+export const KanbanColumn = React.forwardRef<
+  HTMLDivElement,
+  { kanban: Kanban }
+>(({ kanban }, ref, ...props) => {
   const { data: allTask } = UseTasks(useTasksSearchParams());
   const tasks = allTask?.filter((task) => task.kanbanId === kanban.id);
   return (
-    <Container>
+    <Container {...props} ref={ref}>
       <Row justify={"space-between"}>
         <h3>{kanban.name}</h3>
-        <More kanban={kanban} />
+        <More kanban={kanban} key={kanban.id} />
       </Row>
       <TaskContainer>
         {tasks?.map((task) => (
-          <TaskCard task={task} />
+          <TaskCard task={task} key={task.id} />
         ))}
         <CreateTask kanbanId={kanban.id} />
       </TaskContainer>
     </Container>
   );
-};
+});
 
 const More = ({ kanban }: { kanban: Kanban }) => {
   const { mutateAsync } = useDeleteKanban(useKanbansQueryKey());
