@@ -17,7 +17,7 @@
     "@welldone-software/why-did-you-render": "^7.0.1",
     "antd": "^4.24.3",
     "craco-less": "^2.0.0",
-    "dayjs": "^1.11.6",
+    "dayjs": "^1.11.7",
     "eslint-config-prettier": "^8.5.0",
     "history": "^5.3.0",
     "jira-dev-tool": "^1.6.59",

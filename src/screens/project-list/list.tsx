@@ -96,6 +96,7 @@ const More = ({ project }: { project: Project }) => {
       title: "确定删除这个项目吗？",
       content: "点击确定删除",
       okText: "确定",
+      cancelText: "取消",
       onOk() {
         deleteProject({ id });
       },
