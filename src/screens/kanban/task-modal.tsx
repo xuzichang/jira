@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-03-09 17:05:53
- * @LastEditTime: 2023-03-19 17:18:20
+ * @LastEditTime: 2023-03-23 23:23:35
  */
 import React, { useEffect } from "react";
 import { useForm } from "antd/es/form/Form";
@@ -13,7 +13,7 @@ import { TaskTypeSelect } from "components/task-type-select";
 
 const layout = {
   labelCol: { span: 8 },
-  warpperCol: { span: 16 },
+  warppercol: { span: 16 },
 };
 
 export const TaskModal = () => {

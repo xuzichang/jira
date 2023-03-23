@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-02-06 12:05:02
- * @LastEditTime: 2023-03-23 23:10:01
+ * @LastEditTime: 2023-03-23 23:19:13
  */
 import styled from "@emotion/styled";
 import { Button, Divider, List, Popover, Typography } from "antd";
@@ -33,7 +33,7 @@ export const ProjectPopover = () => {
   );
   return (
     <Popover
-      onVisibleChange={() => refetch}
+      onOpenChange={() => refetch()}
       placement={"bottom"}
       content={content}
     >

@@ -27,7 +27,7 @@ export const CreateEpic = (
 
   return (
     <Drawer
-      visible={props.visible}
+      open={props.visible}
       onClose={props.onClose}
       forceRender={true}
       destroyOnClose={true}

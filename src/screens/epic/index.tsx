@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-12-03 18:01:57
- * @LastEditTime: 2023-03-23 22:49:15
+ * @LastEditTime: 2023-03-23 23:38:29
  */
 /*
  * @Description: 任务组
@@ -75,7 +75,7 @@ export const EpicScreen = () => {
                 .map((task) => (
                   <Link
                     style={{ display: "block" }}
-                    to={`projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
+                    to={`/projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
                     key={task.id}
                   >
                     {task.name}
