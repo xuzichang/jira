@@ -1,5 +1,5 @@
 /*
- * @Description:
+ * @Description:er
  * @Date: 2023-03-04 15:43:19
  * @LastEditTime: 2023-03-09 17:29:55
  */
@@ -10,6 +10,7 @@ import {
   useAddConfig,
   useDeleteConfig,
   useEditConfig,
+  useReorderConfig,
 } from "./use-optimistic-options";
 
 export const UseTasks = (param?: Partial<Task>) => {
@@ -65,4 +66,23 @@ export const useDeleteTask = (queryKey: QueryKey) => {
       }),
     useDeleteConfig(queryKey)
   );
+};
+
+// 拖拽重排
+// 将 fromId 放在 referenceId 的before / after
+export interface SortProps {
+  fromId: number;
+  referenceId: number;
+  type: "before" | "after";
+  fromKanbanId?: number;
+  toKanbanId?: number;
+}
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHttp();
+  return useMutation((params: SortProps) => {
+    return client("tasks/reorder", {
+      data: params,
+      method: "POST",
+    });
+  }, useReorderConfig(queryKey));
 };

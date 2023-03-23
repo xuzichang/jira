@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2023-03-04 15:59:19
- * @LastEditTime: 2023-03-21 17:41:00
+ * @LastEditTime: 2023-03-23 13:56:30
  */
 import React from "react";
 import { Kanban } from "types/kanban";
@@ -73,7 +73,7 @@ export const KanbanColumn = React.forwardRef<
         <Drop
           type={"ROW"}
           direction={"vertical"}
-          droppableId={"task" + kanban.id}
+          droppableId={String(kanban.id)}
         >
           <DropChild>
             {tasks?.map((task, taskIndex) => (

@@ -41,3 +41,7 @@ export const useEditConfig = (queryKey: QueryKey) =>
   );
 export const useAddConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => (old ? [...old, target] : []));
+
+// 拖拽
+export const useReorderConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => old || []);
