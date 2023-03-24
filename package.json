@@ -20,7 +20,7 @@
     "dayjs": "^1.11.7",
     "eslint-config-prettier": "^8.5.0",
     "history": "^5.3.0",
-    "jira-dev-tool": "^1.6.59",
+    "jira-dev-tool": "1.6.59",
     "json-server": "^0.17.0",
     "qs": "^6.11.0",
     "react": "^18.0.0",
@@ -39,7 +39,9 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "json-server": "json-server __json_server_mock__/db.json --watch --port 3001 --middlewares ./__json_server_mock__/middleware.js"
+    "json-server": "json-server __json_server_mock__/db.json --watch --port 3001 --middlewares ./__json_server_mock__/middleware.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -r git@github.com:xuzichang/xuzichang.github.io.git -b main"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +65,7 @@
   "devDependencies": {
     "@types/react": "^18.0.5",
     "@types/react-beautiful-dnd": "^13.1.4",
+    "gh-pages": "^5.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "prettier": "2.6.2"
